@@ -1,4 +1,8 @@
 {
-    "unocss.root": "packages/client",
-    "editor.inlineSuggest.enabled": true,
+  "editor.detectIndentation": false,
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+
+  "unocss.root": "packages/client",
+  "editor.inlineSuggest.enabled": true
 }
