@@ -5,6 +5,7 @@ import Pages from "vite-plugin-pages";
 import Icons from "unplugin-icons/vite"
 import IconsResolver from 'unplugin-icons/resolver'
 import AutoImport from 'unplugin-auto-import/vite'
+
 import UnoCSS from 'unocss/vite'
 // import devtools from 'solid-devtools/vite';
 
@@ -15,8 +16,8 @@ export default defineConfig({
     For more info see https://github.com/thetarnav/solid-devtools/tree/main/packages/extension#readme
     */
     // devtools(),
-    UnoCSS(),
     solidPlugin(),
+    UnoCSS(),
     Pages(),
     AutoImport({
       resolvers: [

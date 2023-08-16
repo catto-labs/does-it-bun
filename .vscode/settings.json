@@ -1,3 +1,4 @@
 {
-    "unocss.root": "packages/client"
+    "unocss.root": "packages/client",
+    "editor.inlineSuggest.enabled": true,
 }
