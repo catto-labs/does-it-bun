@@ -16,6 +16,9 @@ export default defineConfig({
             "accent-light": "#9ccfd8",
             "accent": "#425ced",
             "accent-darker": "#2c3382"
+        },
+        fontFamily: {
+            sans: "DM Sans"
         }
     }
 })

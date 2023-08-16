@@ -20,6 +20,7 @@
     "vite-plugin-solid": "^2.7.0"
   },
   "dependencies": {
+    "@fontsource/dm-sans": "^5.0.9",
     "@iconify/json": "^2.2.102",
     "@solidjs/meta": "^0.28.6",
     "@solidjs/router": "^0.8.3",
