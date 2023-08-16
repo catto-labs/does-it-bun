@@ -5,6 +5,7 @@
     "moduleResolution": "Node",
     "target": "ESNext",
     "module": "ESNext",
+    "lib": ["DOM", "ESNext"],
     
     "isolatedModules": true,
     "esModuleInterop": true,
