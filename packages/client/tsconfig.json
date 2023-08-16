@@ -1,15 +1,33 @@
 {
   "compilerOptions": {
-    "strict": true,
+    "noErrorTruncation": true,
+
+    "moduleResolution": "Node",
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
+    
+    "isolatedModules": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
-    "types": ["vite/client", "vite-plugin-pages/client-solid", "unplugin-icons/types/solid",],
+
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["./*"]
+    },
+    
+    "strict": true,
     "noEmit": true,
-    "isolatedModules": true
-  }
+
+    "types": [
+      "vite/client",
+      "vite-plugin-pages/client-solid",
+      "unplugin-icons/types/solid"
+    ]
+  },
+
+  "include": ["src", "uno.config.ts", "vite.config.ts"],
+  "exclude": ["node_modules"]
 }
