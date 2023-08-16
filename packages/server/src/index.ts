@@ -1,7 +1,8 @@
 import { Elysia } from "elysia";
 
-const app = new Elysia().get("/", () => "Hello Elysia").listen(3000);
 
-console.log(
-  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
-);
+const app = new Elysia().get("/", () => "Hello Elysia").listen(8000, (server) => {
+  console.info("[server.index]: ready on port", server.port);
+});
+
+export type ServerApp = typeof app;

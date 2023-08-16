@@ -17,6 +17,7 @@
     "vite-plugin-solid": "^2.7.0"
   },
   "dependencies": {
+    "@elysiajs/eden": "latest",
     "@fontsource/dm-sans": "^5.0.9",
     "@iconify/json": "^2.2.102",
     "@solidjs/meta": "^0.28.6",
