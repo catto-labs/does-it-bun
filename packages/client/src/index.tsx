@@ -8,8 +8,7 @@ render(
   () => {
     const Routes = useRoutes(routes)
     return (
-      <div>
-        <h1>Pogo</h1>
+      <div class="w-full h-screen bg-black-900 text-light-9">
         <Router>
           <Routes />
         </Router>

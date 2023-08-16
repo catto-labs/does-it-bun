@@ -13,7 +13,9 @@ export default defineConfig({
             "text": "#e0def4",
             "subtle": "#908caa",
             "muted": "#6e6a86",
-            "accent": "#9ccfd8"
+            "accent-light": "#9ccfd8",
+            "accent": "#425ced",
+            "accent-darker": "#2c3382"
         }
     }
 })
