@@ -1,15 +1,16 @@
-# does-it-bun
+# Does It Bun?
 
-To install dependencies:
+> An experimental website that tells you if an NPM package
+> is fully compatible with Bun or Node and why it is not.
 
-```bash
-bun install
-```
+## Demonstration
 
-To run:
+> TODO
 
-```bash
-bun run index.ts
-```
+## Develop
 
-This project was created using `bun init` in bun v0.6.3. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+> TODO
+
+## Resources
+
+> TODO
