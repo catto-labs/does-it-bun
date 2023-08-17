@@ -2,7 +2,7 @@ import type { Readable } from "node:stream";
 import type { FileFromTarball } from "./types";
 import tar from "tar";
 
-const extractTarball = (tarball: Readable) => new Promise((resolve, reject) => {
+const extractTarball = (tarball: Readable) => new Promise<Array<FileFromTarball>>((resolve, reject) => {
   try {
     const files: Record<string, FileFromTarball> = {};
   
@@ -21,7 +21,7 @@ const extractTarball = (tarball: Readable) => new Promise((resolve, reject) => {
           });
         })
         .on("close", () => {
-          resolve(files);
+          resolve(Object.values(files));
         }) as unknown as WritableStream<any>
     );
   }
