@@ -18,9 +18,7 @@ const app = new Elysia()
 
     const checked_files = [];
     for (const file of files) {
-      checked_files.push(
-        scanFile(file)
-      );
+      checked_files.push(scanFile(file));
     }
 
     return {
