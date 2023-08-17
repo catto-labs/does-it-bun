@@ -3,6 +3,7 @@ import NPM from "@/npm";
 
 import { downloadTarballAsReadable } from "./tarball/download";
 import extractTarball from "./tarball/extract";
+import { scanFile } from "./scan";
 
 const app = new Elysia()
   .get("/scan", async ({ query }) => {
@@ -15,9 +16,16 @@ const app = new Elysia()
     const tarball = await downloadTarballAsReadable(pkg_data.tarball);
     const files = await extractTarball(tarball);
 
+    const checked_files = [];
+    for (const file of files) {
+      checked_files.push(
+        scanFile(file)
+      );
+    }
+
     return {
       success: true,
-      data: files
+      data: checked_files
     }
   }, {
     error({ code, error, set }) {
