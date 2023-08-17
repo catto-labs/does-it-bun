@@ -1,6 +1,9 @@
 import { Elysia, t } from "elysia";
 import NPM from "@/npm";
 
+import { downloadTarballAsReadable } from "./tarball/download";
+import extractTarball from "./tarball/extract";
+
 const app = new Elysia()
   .get("/scan", async ({ query }) => {
     const npm = new NPM(query.registry);
@@ -9,10 +12,12 @@ const app = new Elysia()
     const version = query.version ?? pkg.tags["latest"];
 
     const pkg_data = pkg.getVersion(version);
+    const tarball = await downloadTarballAsReadable(pkg_data.tarball);
+    const files = await extractTarball(tarball);
 
     return {
       success: true,
-      data: pkg_data.tarball
+      data: files
     }
   }, {
     error({ code, error, set }) {

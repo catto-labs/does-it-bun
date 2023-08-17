@@ -6,9 +6,11 @@
     "dev": "bun run --watch src/index.ts"
   },
   "dependencies": {
-    "elysia": "latest"
+    "elysia": "latest",
+    "tar": "^6.1.15"
   },
   "devDependencies": {
+    "@types/tar": "^6.1.5",
     "bun-types": "latest",
     "typescript": "^5.0.0"
   }
