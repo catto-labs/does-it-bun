@@ -1,8 +1,46 @@
-import { Elysia } from "elysia";
-import { getPackage } from "./npm/registry";
+import { Elysia, t } from "elysia";
+import NPM from "@/npm";
 
-const app = new Elysia().get("/", async() => ((await getPackage("elysia")).versions)).listen(8000, (server) => {
-  console.info("[server.index]: ready on port", server.port);
-});
+const app = new Elysia()
+  .get("/scan", async ({ query }) => {
+    const npm = new NPM(query.registry);
+    
+    const pkg = await npm.package(query.name);
+    const version = query.version ?? pkg.tags["latest"];
+
+    const pkg_data = pkg.getVersion(version);
+
+    return {
+      success: true,
+      data: pkg_data.tarball
+    }
+  }, {
+    error({ code, error, set }) {
+      if (code === "VALIDATION") {
+        set.status = error.status;
+        return {
+          success: false,
+          message: error.message
+        }
+      }
+
+      set.status = 500;
+      return {
+        success: false,
+        message: "Unknown error happened server side.",
+        debug: error
+      }
+    },
+    query: t.Object({
+      name: t.String({
+        error: "Needs name query parameter",
+      }),
+      version: t.Optional(t.String()),
+      registry: t.Optional(t.String())
+    })
+  })
+  .listen(8000, (server) => {
+    console.info(`[server.index]: ready on port ${server.hostname}:${server.port}`);
+  });
 
 export type ServerApp = typeof app;
