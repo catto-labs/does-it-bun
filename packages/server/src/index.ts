@@ -1,9 +1,9 @@
 import { Elysia, t } from "elysia";
-import NPM from "@/npm";
 
-import { downloadTarballAsReadable } from "./tarball/download";
-import extractTarball from "./tarball/extract";
-import { scanFile } from "./scan";
+import { downloadTarballAsReadable } from "@/tarball/download";
+import extractTarball from "@/tarball/extract";
+import { scanFile } from "@/scan";
+import NPM from "@/npm";
 
 const app = new Elysia()
   .get("/scan", async ({ query }) => {

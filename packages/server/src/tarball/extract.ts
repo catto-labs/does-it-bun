@@ -1,5 +1,5 @@
 import type { Readable } from "node:stream";
-import type { FileFromTarball } from "./types";
+import type { FileFromTarball } from "@/tarball/types";
 import tar from "tar";
 
 const extractTarball = (tarball: Readable) => new Promise<Array<FileFromTarball>>((resolve, reject) => {
