@@ -6,12 +6,14 @@
     "dev": "bun run --watch src/index.ts"
   },
   "dependencies": {
+    "drizzle-orm": "^0.28.2",
     "elysia": "latest",
     "tar": "^6.1.15"
   },
   "devDependencies": {
     "@types/tar": "^6.1.5",
     "bun-types": "latest",
+    "drizzle-kit": "^0.19.12",
     "typescript": "^5.0.0"
   }
 }

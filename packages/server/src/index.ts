@@ -5,6 +5,9 @@ import extractTarball from "@/tarball/extract";
 import { scanFile } from "@/scan";
 import NPM from "@/npm";
 
+import { db } from "@/db/sqlite"
+import { packages } from "./db/schema";
+
 const app = new Elysia()
   .get("/scan", async ({ query }) => {
     const npm = new NPM(query.registry);
@@ -49,6 +52,14 @@ const app = new Elysia()
       version: t.Optional(t.String()),
       registry: t.Optional(t.String())
     })
+  })
+  .get("/db", async ({ query }) => {
+    const result = db.select().from(packages).all();
+
+    return {
+      success: true,
+      data: result
+    }
   })
   .listen(8000, (server) => {
     console.info(`[server.index]: ready on port ${server.hostname}:${server.port}`);
