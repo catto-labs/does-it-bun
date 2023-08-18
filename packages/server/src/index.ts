@@ -5,8 +5,7 @@ import extractTarball from "@/tarball/extract";
 import { scanFile } from "@/scan";
 import NPM from "@/npm";
 
-import { db } from "@/db/sqlite"
-import { packages } from "./db/schema";
+import database, { packages } from "@/database";
 
 const app = new Elysia()
   .get("/scan", async ({ query }) => {
@@ -54,7 +53,7 @@ const app = new Elysia()
     })
   })
   .get("/db", async ({ query }) => {
-    const result = db.select().from(packages).all();
+    const result = database.select().from(packages).all();
 
     return {
       success: true,
