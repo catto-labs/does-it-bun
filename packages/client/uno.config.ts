@@ -12,6 +12,7 @@ export default defineConfig({
       "black-700": "#26233a",
       "black-600": "#6e6a86",
       "text": "#e0def4",
+      "subtext": "#c2c0d8",
       "subtle": "#908caa",
       "muted": "#6e6a86",
       "accent-light": "#9ccfd8",
