@@ -153,7 +153,5 @@ const BUN_BUILT_IN_MODULES_NOT_IMPLEMENTED = {
       // https://nodejs.org/api/events.html#eventsonemitter-eventname-options
       "on"
     ]
-  },
-
-  
+  }
 }

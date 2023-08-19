@@ -6,6 +6,7 @@
     "dev": "bun run --watch src/index.ts"
   },
   "dependencies": {
+    "@babel/parser": "^7.22.10",
     "drizzle-orm": "^0.28.2",
     "elysia": "latest",
     "tar": "^6.1.15"
