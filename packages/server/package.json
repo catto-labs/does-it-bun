@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "@babel/parser": "^7.22.10",
+    "@elysiajs/cors": "^0.6.0",
     "drizzle-orm": "^0.28.2",
     "elysia": "latest",
     "tar": "^6.1.15"

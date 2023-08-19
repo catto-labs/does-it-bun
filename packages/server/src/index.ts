@@ -1,4 +1,5 @@
 import { Elysia, t } from "elysia";
+import { cors } from '@elysiajs/cors'
 
 import { downloadTarballAsReadable } from "@/tarball/download";
 import extractTarball from "@/tarball/extract";
@@ -8,6 +9,7 @@ import NPM from "@/npm";
 import database, { packages } from "@/database";
 
 const app = new Elysia()
+  .use(cors())
   .get("/scan", async ({ query }) => {
     const npm = new NPM(query.registry);
     
