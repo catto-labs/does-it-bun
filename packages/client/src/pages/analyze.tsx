@@ -13,7 +13,7 @@ import { rosePineDawn } from "thememirror";
 import { scan } from "../../../server/src/scan/individual";
 
 const Page: Component = () => {
-  const [code, setCode] = createSignal(`console.log("Hello World!");\n// You can write code, and you'll see the parser's AST on the bottom.\n//On the right panel, you'll be able to see the possible incompatibilities with Bun.`);
+  const [code, setCode] = createSignal(`// You can write code, and you'll see the parser's AST on the right panel.\n// On the bottom, you'll be able to see the possible incompatibilities with Bun.\n\nimport { Certificate } from "crypto";\nrequire("crypto");`);
   const [ast, setAST] = createSignal<ParseResult<File> | null>(null);
 
   let timeout: ReturnType<typeof setTimeout> | undefined;
