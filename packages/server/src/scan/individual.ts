@@ -1,5 +1,5 @@
 import type { ParseResult } from "@babel/parser";
-import type { File } from "@babel/types";
+import type { File, ImportDeclaration, VariableDeclaration, Statement } from "@babel/types";
 
 import { BUN_BUILT_IN_MODULES_NOT_IMPLEMENTED } from "../references/bun";
 
@@ -63,27 +63,135 @@ const checkMethodFromModule = (method_name: string, module_name: string): ScanRe
   };
 }
 
-export const scan = (code: ParseResult<File>) => {
-  const issues: Array<Record<string, unknown>> = [];
-  const body = code.program.body;
+type ScanIssues = Array<ScanResult>;
+type ScanVariables = Record<string, string>;
 
-  for (const declaration of body) {
-    /** import ... from ... */
-    if (declaration.type === "ImportDeclaration") {
-      const module_name = nodeifyModuleName(declaration.source.value);
-      if (!isModuleNoted(module_name)) continue;
+type ScannedBlock = {
+  variables: ScanVariables
+  issues: ScanIssues
+}
 
-      for (const specifier of declaration.specifiers) {
-        if (specifier.type !== "ImportSpecifier") continue;
-        if (specifier.imported.type !== "Identifier") continue;
+type ScanFunction<T extends Statement> = (block: T, variables: ScanVariables, issues: ScanIssues) => ScannedBlock;
 
-        const method_name = specifier.imported.name;
+/**
+ * // Can be directly flagged:
+ * import { Something } from "crypto";
+ * 
+ * // Should be tracked:
+ * import crypto from "crypto";
+ * import * as crypto from "crypto";
+ * // because it can use a flagged property later...
+ * TODO: const Something = crypto.Something;
+ */
+const scanImportDeclaration: ScanFunction<ImportDeclaration> = (block, variables, issues) => {
+  const module_name = nodeifyModuleName(block.source.value);
+  if (!isModuleNoted(module_name)) return { issues, variables };
+
+  for (const specifier of block.specifiers) {
+    switch (specifier.type) {
+      case "ImportSpecifier": {
+        const imported = specifier.imported;
+        if (imported.type !== "Identifier") continue;
+
+        const method_name = imported.name;
+        const check_result = checkMethodFromModule(method_name, module_name);
+        
+        if (!check_result.is_issue) continue;
+        issues.push(check_result);
+        
+        break;
+      }
+      // import crypto from "crypto";
+      case "ImportDefaultSpecifier":
+      // import * as crypto from "crypto";
+      case "ImportNamespaceSpecifier":
+        variables[specifier.local.name] = module_name;
+        break;
+    }
+  }
+
+  return { issues, variables };
+}
+
+/**
+ * // Can be directly flagged:
+ * const { Something } = require("crypto");
+ * TODO: const Something = require("crypto").Something;
+ * 
+ * // Should be tracked:
+ * const crypto = require("crypto");
+ * // because it can use a flagged property later...
+ * TODO: const Something = crypto.Something;
+ */
+const scanVariableDeclaration: ScanFunction<VariableDeclaration> = (block, variables, issues) => {
+  for (const declaration of block.declarations) {
+    const initializer = declaration.init;
+    // If the variable is not declared, we don't care about it, yet...
+    if (!initializer) continue;
+
+    // `require()` is a function, so if the initializer is not calling a function, it shouldn't be a `require`.
+    if (initializer.type !== "CallExpression") continue;
+    if (initializer.callee.type !== "Identifier") continue;
+
+    // We check if the function called is named `require`.
+    if (initializer.callee.name !== "require") continue;
+
+    // We get the module name using the first argument.
+    const first_argument = initializer.arguments[0];
+    if (first_argument.type !== "StringLiteral") continue;
+    const module_name = nodeifyModuleName(first_argument.value);
+
+    // Here, we're in that case: `const variableName = require("crypto")`
+    // Where `variableName` is `declaration.id.name`.
+    if (declaration.id.type === "Identifier") {
+      variables[declaration.id.name] = module_name;
+    }
+    // Here, we're in that case: `const { Something } = require("crypto")`
+    else if (declaration.id.type === "ObjectPattern") {
+      for (const property of declaration.id.properties) {
+        // TODO: Implement checking for `RestElement`.
+        if (property.type !== "ObjectProperty") continue;
+        if (property.key.type !== "Identifier") continue;
+
+        const method_name = property.key.name;
         const check_result = checkMethodFromModule(method_name, module_name);
         if (!check_result.is_issue) continue;
         issues.push(check_result);
       }
     }
   }
+
+  return { variables, issues };
+}
+
+export const scan = (code: ParseResult<File>) => {
+  const body = code.program.body;
+
+  // Initialize the values at the start of the scan.
+  let variables: ScanVariables = {};
+  let issues: ScanIssues = [];
+
+  // Go for the analyze from start to end of the file.
+  for (const block of body) {
+    const handle = <T extends Statement>(fn: ScanFunction<T>) => {
+      const results = fn(block as T, variables, issues);
+
+      // Update the local variables.
+      variables = results.variables;
+      issues = results.issues
+    };
+
+    switch (block.type) {
+      case "ImportDeclaration":
+        handle(scanImportDeclaration);
+        break;
+      case "VariableDeclaration":
+        handle(scanVariableDeclaration);
+        break;
+    }
+  }
+
+  console.log(issues, variables);
 
   return issues;
 }
