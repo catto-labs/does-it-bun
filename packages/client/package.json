@@ -17,12 +17,21 @@
     "vite-plugin-solid": "^2.7.0"
   },
   "dependencies": {
+    "@babel/parser": "^7.22.10",
+    "@babel/types": "^7.22.10",
+    "@codemirror/lang-javascript": "^6.1.9",
+    "@codemirror/lang-json": "^6.0.1",
+    "@codemirror/language": "^6.9.0",
+    "@codemirror/state": "^6.2.0",
+    "@codemirror/view": "^6.12.0",
     "@elysiajs/eden": "latest",
     "@fontsource/dm-sans": "^5.0.9",
     "@iconify/json": "^2.2.102",
     "@solidjs/meta": "^0.28.6",
     "@solidjs/router": "^0.8.3",
     "@unocss/reset": "^0.55.1",
-    "solid-js": "^1.7.6"
+    "solid-codemirror": "^2.3.0",
+    "solid-js": "^1.7.6",
+    "thememirror": "^2.0.1"
   }
 }

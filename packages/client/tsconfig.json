@@ -5,7 +5,6 @@
     "moduleResolution": "Node",
     "target": "ESNext",
     "module": "ESNext",
-    "lib": ["DOM", "ESNext"],
     
     "isolatedModules": true,
     "esModuleInterop": true,
@@ -14,9 +13,9 @@
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
 
-    "baseUrl": "src",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"]
     },
     
     "strict": true,

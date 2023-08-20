@@ -1,5 +1,6 @@
 import type { FileFromTarball } from "@/tarball/types";
 import { parse } from "@babel/parser";
+import { scan } from "./individual";
 
 const shouldBeIgnored = (path: string) => {
   const isJavaScriptFile = path.endsWith(".js")
@@ -14,8 +15,7 @@ const shouldBeIgnored = (path: string) => {
 export interface ScannedFile {
   path: string
   ignored: false
-  ast: string,
-  issues: Array<unknown>
+  issues: ReturnType<typeof scan>
 }
 
 export interface IgnoredFile {
@@ -34,18 +34,14 @@ export const scanFile = (file: FileFromTarball): (ScannedFile | IgnoredFile) => 
     ignored: true
   } satisfies IgnoredFile);
 
-  const ast = parse(file.content, { sourceType: "unambiguous" });
-
   try {
-    // Setup the output data.
-    const output: ScannedFile = {
+    const ast = parse(file.content, { sourceType: "unambiguous" });
+
+    return ({
       path: file.path,
       ignored: false,
-      issues: [],
-      ast: JSON.stringify(ast.program)
-    };
-    
-    return output;
+      issues: scan(ast),
+    } satisfies ScannedFile);
   }
   catch (error) {
     return ({

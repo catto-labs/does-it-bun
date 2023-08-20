@@ -4,5 +4,8 @@
   "editor.tabSize": 2,
 
   "unocss.root": "packages/client",
-  "editor.inlineSuggest.enabled": true
+  "editor.inlineSuggest.enabled": true,
+  "cSpell.words": [
+    "nodeify"
+  ]
 }

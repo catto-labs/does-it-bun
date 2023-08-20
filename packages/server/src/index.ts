@@ -20,7 +20,7 @@ const app = new Elysia()
     const tarball = await downloadTarballAsReadable(pkg_data.tarball);
     const files = await extractTarball(tarball);
 
-    const checked_files = [];
+    const checked_files: Array<ReturnType<typeof scanFile>> = [];
     for (const file of files) {
       checked_files.push(scanFile(file));
     }
