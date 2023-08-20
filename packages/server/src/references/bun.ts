@@ -17,13 +17,9 @@ export const BUN_LAST_COMMIT_UPDATE = "6fd0043f6bf766cc488a88339059e8879fa07161"
 
 type ModulesNote = (
   /** These methods are implemented but everything else is not implemented. */
-  | { implemented: string[] }
-  /** Not implemented. */
-  | { implemented: [] }
+  | { not_implemented?: never, implemented: string[] }
   /** These methods are not implemented but everything else is implemented. */
-  | { not_implemented: string[] }
-  /** Fully implemented. */
-  | { not_implemented: [] }
+  | { not_implemented: string[], implemented?: never }
 )
 
 /**
