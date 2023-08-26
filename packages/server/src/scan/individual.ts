@@ -1,7 +1,7 @@
 import type { ParseResult } from "@babel/parser";
 import type { File, ImportDeclaration, VariableDeclaration, Statement } from "@babel/types";
 
-import { BUN_BUILT_IN_MODULES_NOT_IMPLEMENTED } from "../references/bun";
+import { BUN_BUILT_IN_MODULES_NOTES } from "../references/bun";
 
 export type ScanResult = (
   | { is_issue: true, from: string, description: string }
@@ -14,11 +14,11 @@ const nodeifyModuleName = (module_name: string): string => {
 }
 
 const isModuleNoted = (module_name: string): boolean => {
-  return module_name in BUN_BUILT_IN_MODULES_NOT_IMPLEMENTED;
+  return module_name in BUN_BUILT_IN_MODULES_NOTES;
 }
 
 const checkMethodFromModule = (method_name: string, module_name: string): ScanResult => {
-  const module_notes = BUN_BUILT_IN_MODULES_NOT_IMPLEMENTED[module_name];
+  const module_notes = BUN_BUILT_IN_MODULES_NOTES[module_name];
 
   if (typeof module_notes.implemented !== "undefined") {
     if (module_notes.implemented.length === 0) return {
