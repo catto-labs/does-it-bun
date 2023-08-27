@@ -1,16 +1,13 @@
 # Does It Bun?
+An experimental website that tells you if an NPM package is fully compatible with Bun or Node and why it is not.
 
-> An experimental website that tells you if an NPM package
-> is fully compatible with Bun or Node and why it is not.
+Please keep in mind this is very much still a WIP.
 
 ## Demonstration
-
-> TODO
+Coming soon
 
 ## Develop
-
-> TODO
+Coming soon
 
 ## Resources
-
-> TODO
+Coming soon
