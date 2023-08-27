@@ -54,13 +54,32 @@ const app = new Elysia()
       registry: t.Optional(t.String())
     })
   })
-  .get("/db", async ({ query }) => {
-    const result = database.select().from(packages).all();
+  
+  .get("/search", async ({ query }) => {
+    const npm = new NPM(query.registry);
+
+    const data = await npm.search(query.name);
+    if (!data || data.objects.length === 0) {
+      return {
+        success: false,
+        error: "No search results found or search failed"
+      }
+    }
 
     return {
       success: true,
-      data: result
+      data: data
     }
+  }, {
+    error(err) {
+      // error handling
+    },
+    query: t.Object({
+      name: t.String({
+        error: "Search requires a package name to search for"
+      }),
+      registry: t.Optional(t.String())
+    })
   })
   .listen(8000, (server) => {
     console.info(`[server.index]: ready on port ${server.hostname}:${server.port}`);

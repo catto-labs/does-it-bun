@@ -8,7 +8,7 @@ const Home: Component = () => {
 
   const formHandler: JSX.EventHandler<HTMLFormElement, SubmitEvent> = async (event) => {
     event.preventDefault();
-    navigate(`/package?name=${packageName()}`);
+    navigate(`/search?name=${packageName()}`);
   }
 
   return (

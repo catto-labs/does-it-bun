@@ -1,3 +1,9 @@
+export interface PackageSearchData {
+  objects: Array<{
+    package: PackageData
+  }>;
+}
+
 /**
  * Data received when calling the
  * `/{package_name}` endpoint on the registry.
