@@ -5,7 +5,7 @@ const Header: Component = () => {
   return (
     <header class="fixed top-0 left-0 w-full bg-black-900/80 backdrop-blur-md text-text py-4 px-8 flex justify-between items-center">
       <Link href="/" class="text-2xl font-bold flex flex-row items-center gap-4">
-        <img src="../../public/does_it_bun_icon.png" class=" h-12"></img>
+        <img src="does_it_bun_icon.png" class=" h-12"></img>
         <span class="font-medium">Does it Bun?</span>
       </Link>
       <nav class="flex flex-row items-center">
