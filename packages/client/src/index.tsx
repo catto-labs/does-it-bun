@@ -12,6 +12,7 @@ import { Router, useRoutes } from '@solidjs/router'
 import { MetaProvider } from "@solidjs/meta";
 
 import routes from '~solid-pages'
+import Header from "./components/header";
 
 render(
   () => {
@@ -21,7 +22,10 @@ render(
       <MetaProvider>
         <div class="min-h-screen h-full bg-black-900 text-text font-sans">
           <Router>
-            <Routes />
+            <Header />
+            <div class="pt-14">
+              <Routes />
+            </div>
           </Router>
         </div>
       </MetaProvider>

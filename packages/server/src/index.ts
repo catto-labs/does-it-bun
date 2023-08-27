@@ -62,6 +62,28 @@ const app = new Elysia()
       data: result
     }
   })
+  .get("/search", async ({ query }) => {
+    const npm = new NPM();
+    const pkg = await npm.package(query.name);
+    
+    return {
+      success: true,
+      data: {
+        name: pkg.name,
+        description: pkg.description,
+        versions: Object.keys(pkg.versions)
+      }
+    }
+  }, {
+    error({ code, error, set }) {
+      // handle errors
+    },
+    query: t.Object({
+      name: t.String({
+        error: "Needs name query parameter",
+      })
+    })
+  })
   .listen(8000, (server) => {
     console.info(`[server.index]: ready on port ${server.hostname}:${server.port}`);
   });
