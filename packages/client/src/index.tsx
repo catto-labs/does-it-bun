@@ -12,7 +12,7 @@ import { Router, useRoutes } from '@solidjs/router'
 import { MetaProvider } from "@solidjs/meta";
 
 import routes from '~solid-pages'
-import Header from "./components/header";
+import Header from "./components/Header";
 
 render(
   () => {
