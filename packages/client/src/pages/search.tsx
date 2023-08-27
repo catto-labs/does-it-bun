@@ -3,11 +3,9 @@ import { A, useSearchParams } from "@solidjs/router";
 import { api } from "@/api";
 import { Title } from "@solidjs/meta";
 
-import type { PackageData } from "../../../server/src/npm/package";
-
 const SearchResults: Component = () => {
   const [params] = useSearchParams<{ name: string }>();
-  const [results, setResults] = createSignal<Array<{package: PackageData}> | null>(null);
+  const [results, setResults] = createSignal<Array<{package: {name: string, description: string, version: string,}}> | null>(null);
 
   onMount(async () => {
     const { data } = await api.search.get({ $query: { name: params.name } });

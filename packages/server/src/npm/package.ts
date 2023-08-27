@@ -1,6 +1,11 @@
 export interface PackageSearchData {
   objects: Array<{
-    package: PackageData
+    package: {
+      name: string,
+      description: string,
+      version: string,
+      keywords: Array<string>,
+    }
   }>;
 }
 
