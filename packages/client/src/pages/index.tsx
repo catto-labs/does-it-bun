@@ -13,7 +13,6 @@ const Home: Component = () => {
 
   return (
     <form class="flex flex-col w-full h-full items-center pt-36"
-    
       onSubmit={formHandler}
     > 
       <h1 class=" text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-tr from-accent to-accent-light mb-2">Does it Bun?</h1>
