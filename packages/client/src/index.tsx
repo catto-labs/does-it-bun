@@ -4,7 +4,7 @@
 /// <reference lib="DOM" />
 
 import "@unocss/reset/tailwind.css";
-import "@fontsource/dm-sans";
+import "@fontsource/hanken-grotesk";
 import 'virtual:uno.css'
 
 import { render } from 'solid-js/web'
@@ -20,10 +20,10 @@ render(
     
     return (
       <MetaProvider>
-        <div class="min-h-screen h-full bg-black-900 text-text font-sans">
+        <div class="min-h-screen h-full bg-black-bg text-text font-sans">
           <Router>
             <Header />
-            <div class="pt-14">
+            <div class="pt-20">
               <Routes />
             </div>
           </Router>

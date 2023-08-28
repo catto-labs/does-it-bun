@@ -15,9 +15,9 @@ const Home: Component = () => {
     <form class="flex flex-col w-full h-full items-center pt-36"
       onSubmit={formHandler}
     > 
-      <h1 class=" text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-tr from-accent to-accent-light mb-2">Does it Bun?</h1>
+      <h1 class=" text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-tr from-accent to-accent-light mb-2">Does it Bun?</h1>
       <h2 class="text-lg text-subtext">Easily check if your package is compatible with Bun.</h2>
-      <div class="flex flex-row items-center mt-8 p-1 rounded-md bg-black-800">
+      <div class="flex flex-row items-center mt-8 p-1 rounded-md bg-black-800 border border-black-700 drop-shadow-[0_35px_35px_#101226]">
         <IconMdiSearch class="mx-2 ml-4 mr-2 text-subtle" />
         <input
           class="px-2 py-1 h-12 w-xl bg-black-800 focus:outline-none"

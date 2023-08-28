@@ -9,6 +9,7 @@ declare global {
   const ErrorBoundary: typeof import('solid-js')['ErrorBoundary']
   const For: typeof import('solid-js')['For']
   const IconMdiGithub: typeof import('~icons/mdi/github.tsx')['default']
+  const IconMdiLaunch: typeof import('~icons/mdi/launch.tsx')['default']
   const IconMdiSearch: typeof import('~icons/mdi/search.tsx')['default']
   const Index: typeof import('solid-js')['Index']
   const Match: typeof import('solid-js')['Match']
