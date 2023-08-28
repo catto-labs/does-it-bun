@@ -19,15 +19,15 @@ const SearchResults: Component = () => {
     <Title>Search - Does it Bun?</Title>
 
     <main class="p-6 flex items-center self-center justify-center mx-auto min-w-2xl max-w-3xl">
-      <div class="mx-auto w-full">
-        <h1 class="text-4xl font-bold mb-4 text-left">Search results: {params.name}</h1>
+      <div class="mx-auto w-full z-10">
+        <h1 class="text-4xl font-bold mb-4 text-left">Search results: <span class="text-accent">{params.name}</span></h1>
         <For each={results()}>
           {result => (
             <Show when={result}>
-              <div class="my-3 p-4 rounded-md bg-black-800 hover:bg-black-700 w-full">
+              <div class="my-3 p-4 rounded-md bg-black-800 hover:bg-black-700 w-full border border-black-700 hover:border-accent/30">
                 <A href={`/package?name=${result.package.name}`} >
                   <div class="flex flex-row items-baseline gap-2">
-                    <h2 class="font-semibold text-xl">{result.package.name}</h2>
+                    <h2 class="font-semibold text-xl text-accent-light">{result.package.name}</h2>
                     <p class="text-subtle">v{result.package.version}</p>
                   </div>
                   <p class="text-subtext">{result.package.description}</p>
