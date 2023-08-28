@@ -7,7 +7,7 @@ import { scanFile } from "@/scan";
 import NPM from "@/npm";
 
 import database, { packageCompatibility } from "@/database";
-import { and, eq } from "drizzle-orm/sql";
+import { and, eq } from "drizzle-orm";
 
 
 const app = new Elysia()
@@ -21,7 +21,7 @@ const app = new Elysia()
     const cachedCompatibility = await database.select().from(packageCompatibility)
         .where(and(eq(packageCompatibility.name, query.name), eq(packageCompatibility.version, version)));
 
-    if (cachedCompatibility) {
+    if (cachedCompatibility[0]) {
         return {
             success: true,
             compatible: Boolean(cachedCompatibility[0].compatible)
@@ -29,6 +29,11 @@ const app = new Elysia()
     }
 
     // If not cached, perform the compatibility check
+    if (Boolean(query.only_use_cache)) return {
+      success: true,
+      compatible: null
+    };
+
     const pkg_data = pkg.getVersion(version);
     const tarball = await downloadTarballAsReadable(pkg_data.tarball);
     const files = await extractTarball(tarball);
@@ -81,6 +86,7 @@ const app = new Elysia()
       name: t.String({
         error: "Needs name query parameter",
       }),
+      only_use_cache: t.Optional(t.String()),
       version: t.Optional(t.String()),
       registry: t.Optional(t.String())
     })
@@ -143,7 +149,7 @@ const app = new Elysia()
   .get("/search", async ({ query }) => {
     const npm = new NPM(query.registry);
 
-    const data = await npm.search(query.name);
+    const data = await npm.search(query.name, 1);
     if (!data || data.objects.length === 0) {
       return {
         success: false,
