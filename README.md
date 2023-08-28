@@ -6,7 +6,10 @@ Built with Solid and UnoCSS on the frontend and with Bun and Elysia on the backe
 Please keep in mind this is very much still a WIP.
 
 ## Demonstration
-Coming soon
+Website screenshot:
+![image](https://github.com/catto-labs/does-it-bun/assets/57040351/20ab51f5-d7cd-4670-8a05-915fccca46fb)
+
+> SECTION WIP
 
 ## Develop
 Coming soon
