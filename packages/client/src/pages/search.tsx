@@ -13,12 +13,17 @@ const SearchResults: Component = () => {
     const { data } = await api.search.get({ $query: { name: params.name, page: page().toString() } });
     if (data && data.success) {
       // Fetch compatibility data for each package
-      for (const result of data.data.objects) {
-        const { data: compatData } = await api.is_package_compatible.get({ $query: { name: result.package.name, only_use_cache: "true" } });
-        if (compatData && compatData.success) {
-          result.package.isCompatible = compatData.compatible;
+      const promises = data.data.objects.map((result: { package: { name: any; }; }) => 
+        api.is_package_compatible.get({ $query: { name: result.package.name, only_use_cache: "true" } })
+      );
+      
+      const results = await Promise.allSettled(promises);
+      
+      results.forEach((result, index) => {
+        if (result.status === 'fulfilled' && result.value.data.success) {
+          data.data.objects[index].package.isCompatible = result.value.data.compatible;
         }
-      }
+      });
 
       batch(() => {
         setResults(data.data.objects);
@@ -31,12 +36,17 @@ const SearchResults: Component = () => {
     setPage(page() + 1);
     const { data } = await api.search.get({ $query: { name: params.name, page: page().toString() } });
     if (data && data.success) {
-      for (const result of data.data.objects) {
-        const { data: compatData } = await api.is_package_compatible.get({ $query: { name: result.package.name, only_use_cache: "true" } });
-        if (compatData && compatData.success) {
-          result.package.isCompatible = compatData.compatible;
+      const promises = data.data.objects.map((result: { package: { name: any; }; }) => 
+        api.is_package_compatible.get({ $query: { name: result.package.name, only_use_cache: "true" } })
+      );
+      
+      const results = await Promise.allSettled(promises);
+      
+      results.forEach((result, index) => {
+        if (result.status === 'fulfilled' && result.value.data.success) {
+          data.data.objects[index].package.isCompatible = result.value.data.compatible;
         }
-      }
+      });
       //@ts-ignore
       setResults([...results(), ...data.data.objects]);
     }
