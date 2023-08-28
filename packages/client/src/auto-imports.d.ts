@@ -8,6 +8,7 @@ declare global {
   const Dynamic: typeof import('solid-js/web')['Dynamic']
   const ErrorBoundary: typeof import('solid-js')['ErrorBoundary']
   const For: typeof import('solid-js')['For']
+  const IconMdiArrowLeft: typeof import('~icons/mdi/arrow-left.tsx')['default']
   const IconMdiGithub: typeof import('~icons/mdi/github.tsx')['default']
   const IconMdiLaunch: typeof import('~icons/mdi/launch.tsx')['default']
   const IconMdiSearch: typeof import('~icons/mdi/search.tsx')['default']
