@@ -7,10 +7,20 @@ export default defineConfig({
   
   theme: {
     colors: {
-      "black-900": "#191724",
-      "black-800": "#1f1d2e",
-      "black-700": "#26233a",
-      "black-600": "#6e6a86",
+      black: {
+        "bg": "#090c0e",
+        900: "#0d0d0d",
+        800: "#141414",
+        700: "#1a1a1a",
+        650: "#2b2b2b",
+        600: "#313131",
+        500: "#484848",
+        400: "#5f5f5f",
+        300: "#767676",
+        200: "#a3a3a3",
+        100: "#d1d1d1",
+        50: "#e8e8e8"
+      },
       "text": "#e0def4",
       "subtext": "#c2c0d8",
       "subtle": "#908caa",
@@ -20,7 +30,7 @@ export default defineConfig({
       "accent-darker": "#2c3382"
     },
     fontFamily: {
-      sans: "DM Sans"
+      sans: "Hanken Grotesk"
     }
   }
 });
