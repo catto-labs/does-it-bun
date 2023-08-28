@@ -8,7 +8,6 @@ export default defineConfig({
   theme: {
     colors: {
       black: {
-        "bg": "#090c0e",
         900: "#0d0d0d",
         800: "#141414",
         700: "#1a1a1a",

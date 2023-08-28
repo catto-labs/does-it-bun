@@ -20,7 +20,7 @@ render(
     
     return (
       <MetaProvider>
-        <div class="min-h-screen h-full bg-black-bg text-text font-sans">
+        <div class="min-h-screen h-full bg-black-900 text-text font-sans">
           <Router>
             <Header />
             <div class="pt-20">
