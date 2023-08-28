@@ -7,8 +7,8 @@ class NPM {
     this.registry = registry;
   }
 
-  public async search (search_input: string) {
-    const url = new URL(`/-/v1/search?text=${search_input}`, this.registry);
+  public async search (search_input: string, page: number) {
+    const url = new URL(`/-/v1/search?text=${search_input}&size=5&from${(page * 5) + 1}`, this.registry);
     const response = await fetch(url, {
       method: "GET"
     });
