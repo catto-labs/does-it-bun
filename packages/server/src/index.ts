@@ -58,7 +58,7 @@ const app = new Elysia()
         name: query.name,
         version: version,
         compatible: compatible ? 1 : 0
-    })
+    });
 
     return {
         success: true,
@@ -116,6 +116,12 @@ const app = new Elysia()
       }
     }
 
+    await database.insert(packageCompatibility).values({
+      name: query.name,
+      version: version,
+      compatible: compatible ? 1 : 0
+    });
+
     return {
       success: true,
       data: checked_files,
@@ -149,7 +155,7 @@ const app = new Elysia()
   .get("/search", async ({ query }) => {
     const npm = new NPM(query.registry);
 
-    const data = await npm.search(query.name, 1);
+    const data = await npm.search(query.name, parseInt(query.page));
     if (!data || data.objects.length === 0) {
       return {
         success: false,
@@ -182,7 +188,8 @@ const app = new Elysia()
       name: t.String({
         error: "Search requires a package name to search for"
       }),
-      registry: t.Optional(t.String())
+      registry: t.Optional(t.String()),
+      page: t.String()
     })
   })
   .listen(8000, (server) => {
