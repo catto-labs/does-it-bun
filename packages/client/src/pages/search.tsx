@@ -47,8 +47,9 @@ const SearchResults: Component = () => {
           data.data.objects[index].package.isCompatible = result.value.data.compatible;
         }
       });
+      
       //@ts-ignore
-      setResults([...results(), ...data.data.objects]);
+      setResults(prevResults => [...prevResults, ...data.data.objects]);
     }
   };
 
