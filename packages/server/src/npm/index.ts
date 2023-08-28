@@ -8,7 +8,7 @@ class NPM {
   }
 
   public async search (search_input: string, page: number) {
-    const url = new URL(`/-/v1/search?text=${search_input}&size=5&from${(page * 5) + 1}`, this.registry);
+    const url = new URL(`/-/v1/search?text=${search_input}&size=8&from${(page * 8) + 1}`, this.registry);
     const response = await fetch(url, {
       method: "GET"
     });
