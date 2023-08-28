@@ -15,7 +15,7 @@
   "devDependencies": {
     "@types/tar": "^6.1.5",
     "bun-types": "latest",
-    "drizzle-kit": "^0.19.12",
+    "drizzle-kit": "^0.19.13",
     "typescript": "^5.0.0"
   }
 }
