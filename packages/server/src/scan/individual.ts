@@ -116,7 +116,7 @@ const scanImportDeclaration: ScanFunction<ImportDeclaration> = (block, variables
 /**
  * // Can be directly flagged:
  * const { Something } = require("crypto");
- * TODO: const Something = require("crypto").Something;
+ * const Something = require("crypto").Something;
  * 
  * // Should be tracked:
  * const crypto = require("crypto");
@@ -130,34 +130,58 @@ const scanVariableDeclaration: ScanFunction<VariableDeclaration> = (block, varia
     if (!initializer) continue;
 
     // `require()` is a function, so if the initializer is not calling a function, it shouldn't be a `require`.
-    if (initializer.type !== "CallExpression") continue;
-    if (initializer.callee.type !== "Identifier") continue;
-
-    // We check if the function called is named `require`.
-    if (initializer.callee.name !== "require") continue;
-
-    // We get the module name using the first argument.
-    const first_argument = initializer.arguments[0];
-    if (first_argument.type !== "StringLiteral") continue;
-    const module_name = nodeifyModuleName(first_argument.value);
-
-    // Here, we're in that case: `const variableName = require("crypto")`
-    // Where `variableName` is `declaration.id.name`.
-    if (declaration.id.type === "Identifier") {
-      variables[declaration.id.name] = module_name;
-    }
-    // Here, we're in that case: `const { Something } = require("crypto")`
-    else if (declaration.id.type === "ObjectPattern") {
-      for (const property of declaration.id.properties) {
-        // TODO: Implement checking for `RestElement`.
-        if (property.type !== "ObjectProperty") continue;
-        if (property.key.type !== "Identifier") continue;
-
-        const method_name = property.key.name;
-        const check_result = checkMethodFromModule(method_name, module_name);
-        if (!check_result.is_issue) continue;
-        issues.push(check_result);
+    if (initializer.type === "CallExpression") {
+      if (initializer.callee.type !== "Identifier") continue;
+  
+      // We check if the function called is named `require`.
+      if (initializer.callee.name !== "require") continue;
+  
+      // We get the module name using the first argument.
+      const first_argument = initializer.arguments[0];
+      if (first_argument.type !== "StringLiteral") continue;
+      const module_name = nodeifyModuleName(first_argument.value);
+  
+      // Here, we're in that case: `const variableName = require("crypto")`
+      // Where `variableName` is `declaration.id.name`.
+      if (declaration.id.type === "Identifier") {
+        variables[declaration.id.name] = module_name;
       }
+      // Here, we're in that case: `const { Something } = require("crypto")`
+      else if (declaration.id.type === "ObjectPattern") {
+        for (const property of declaration.id.properties) {
+          // TODO: Implement checking for `RestElement`.
+          if (property.type !== "ObjectProperty") continue;
+          if (property.key.type !== "Identifier") continue;
+  
+          const method_name = property.key.name;
+          const check_result = checkMethodFromModule(method_name, module_name);
+          if (!check_result.is_issue) continue;
+          issues.push(check_result);
+        }
+      }
+    }
+
+    // const Something = require("...").Something;
+    //                   ^^             ^^
+    //                   `initializer`  `initializer.property`
+    else if (initializer.type === "MemberExpression") {
+      if (initializer.object.type !== "CallExpression") continue;
+      if (initializer.object.callee.type !== "Identifier") continue;
+  
+      // We check if the function called is named `require`.
+      if (initializer.object.callee.name !== "require") continue;
+
+      // We get the module name using the first argument.
+      const first_argument = initializer.object.arguments[0];
+      if (first_argument.type !== "StringLiteral") continue;
+      const module_name = nodeifyModuleName(first_argument.value);
+
+      if (initializer.property.type !== "Identifier") continue;
+      const method_name = initializer.property.name;
+
+      const check_result = checkMethodFromModule(method_name, module_name);
+      if (!check_result.is_issue) continue;
+      issues.push(check_result);
     }
   }
 
